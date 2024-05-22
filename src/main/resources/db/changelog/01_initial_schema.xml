@@ -1,0 +1,18 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="create_user_table" author="Vasily Kuchkin">
+    <createTable tableName="social_user" remarks="Таблица пользователей">
+      <column name="id" type="UUID" remarks="Идентификатор записи">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="pk_svk_out"/>
+      </column>
+      <column name="firstName" type="VARCHAR(255)" remarks="Имя пользователя"/>
+      <column name="secondName" type="VARCHAR(255)" remarks="Фамилия пользователя"/>
+      <column name="birthDate" type="DATE" remarks="Дата рождений"/>
+      <column name="biography" type="VARCHAR(255)" remarks="Биография"/>
+      <column name="city" type="VARCHAR(255)" remarks="Город"/>
+      <column name="password" type="VARCHAR(255)" remarks="Пароль"/>
+      <column name="locked" type="BOOLEAN" remarks="Учетная запись заблокирована"/>
+    </createTable>
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,98 @@
+{
+	"info": {
+		"_postman_id": "08524d01-73ab-42cd-9984-91b19291300f",
+		"name": "OTUS. Homework",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8374946"
+	},
+	"item": [
+		{
+			"name": "Регистрация нового пользователя",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"first_name\": \"Test name\",\n  \"second_name\": \"test name\",\n  \"birthdate\": \"1988-10-12\",\n  \"biography\": \"Test\",\n  \"city\": \"Test\",\n  \"password\": \"Test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Упрощенный процесс аутентификации путем передачи идентификатор пользователя и получения токена для дальнейшего прохождения авторизации",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": \"5dac2b76-aff3-4b58-a8e5-198b8c42258d\",\n  \"password\": \"Test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение анкеты пользователя",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjVkYWMyYjc2LWFmZjMtNGI1OC1hOGU1LTE5OGI4YzQyMjU4ZCIsInVzZXJuYW1lIjoiNWRhYzJiNzYtYWZmMy00YjU4LWE4ZTUtMTk4YjhjNDIyNThkIiwic3ViIjoiNWRhYzJiNzYtYWZmMy00YjU4LWE4ZTUtMTk4YjhjNDIyNThkIiwiaWF0IjoxNzE2MzY3NTU4LCJleHAiOjE3MTY1MTE1NTh9.y5znP5xUxvh-ZBrSw5g86OdJzd6Dd0STVw9BPoNuzCQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/get/5dac2b76-aff3-4b58-a8e5-198b8c42258d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"get",
+						"5dac2b76-aff3-4b58-a8e5-198b8c42258d"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
