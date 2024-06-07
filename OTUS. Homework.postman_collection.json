@@ -93,6 +93,261 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Сгенерировать данные пользователя",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjVkYWMyYjc2LWFmZjMtNGI1OC1hOGU1LTE5OGI4YzQyMjU4ZCIsInVzZXJuYW1lIjoiNWRhYzJiNzYtYWZmMy00YjU4LWE4ZTUtMTk4YjhjNDIyNThkIiwic3ViIjoiNWRhYzJiNzYtYWZmMy00YjU4LWE4ZTUtMTk4YjhjNDIyNThkIiwiaWF0IjoxNzE2MzY3NTU4LCJleHAiOjE3MTY1MTE1NTh9.y5znP5xUxvh-ZBrSw5g86OdJzd6Dd0STVw9BPoNuzCQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/get/5dac2b76-aff3-4b58-a8e5-198b8c42258d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"get",
+						"5dac2b76-aff3-4b58-a8e5-198b8c42258d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Поиск анкет",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/user/search?first_name=<string>&last_name=<string>",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"search"
+					],
+					"query": [
+						{
+							"key": "first_name",
+							"value": "<string>",
+							"description": "(Required) Условие поиска по имени"
+						},
+						{
+							"key": "last_name",
+							"value": "<string>",
+							"description": "(Required) Условие поиска по фамилии"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Успешные поиск пользователя",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user/search?first_name=<string>&last_name=<string>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"search"
+							],
+							"query": [
+								{
+									"key": "first_name",
+									"value": "<string>",
+									"description": "(Required) Условие поиска по имени"
+								},
+								{
+									"key": "last_name",
+									"value": "<string>",
+									"description": "(Required) Условие поиска по фамилии"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n  {\n    \"id\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"second_name\": \"<string>\",\n    \"birthdate\": \"<date>\",\n    \"biography\": \"<string>\",\n    \"city\": \"<string>\"\n  },\n  {\n    \"id\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"second_name\": \"<string>\",\n    \"birthdate\": \"<date>\",\n    \"biography\": \"<string>\",\n    \"city\": \"<string>\"\n  }\n]"
+				},
+				{
+					"name": "Невалидные данные",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user/search?first_name=<string>&last_name=<string>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"search"
+							],
+							"query": [
+								{
+									"key": "first_name",
+									"value": "<string>",
+									"description": "(Required) Условие поиска по имени"
+								},
+								{
+									"key": "last_name",
+									"value": "<string>",
+									"description": "(Required) Условие поиска по фамилии"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Ошибка сервера",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user/search?first_name=<string>&last_name=<string>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"search"
+							],
+							"query": [
+								{
+									"key": "first_name",
+									"value": "<string>",
+									"description": "(Required) Условие поиска по имени"
+								},
+								{
+									"key": "last_name",
+									"value": "<string>",
+									"description": "(Required) Условие поиска по фамилии"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Retry-After",
+							"value": "<integer>",
+							"description": {
+								"content": "Время, через которое еще раз нужно сделать запрос",
+								"type": "text/plain"
+							}
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\",\n  \"code\": \"<integer>\"\n}"
+				},
+				{
+					"name": "Ошибка сервера",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user/search?first_name=<string>&last_name=<string>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"search"
+							],
+							"query": [
+								{
+									"key": "first_name",
+									"value": "<string>",
+									"description": "(Required) Условие поиска по имени"
+								},
+								{
+									"key": "last_name",
+									"value": "<string>",
+									"description": "(Required) Условие поиска по фамилии"
+								}
+							]
+						}
+					},
+					"status": "Service Unavailable",
+					"code": 503,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Retry-After",
+							"value": "<integer>",
+							"description": {
+								"content": "Время, через которое еще раз нужно сделать запрос",
+								"type": "text/plain"
+							}
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\",\n  \"code\": \"<integer>\"\n}"
+				}
+			]
 		}
 	]
 }
