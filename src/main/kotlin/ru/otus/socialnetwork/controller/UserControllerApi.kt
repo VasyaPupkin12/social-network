@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import ru.otus.socialnetwork.dto.register.RegisterCommand
 import ru.otus.socialnetwork.dto.register.RegisterResponse
@@ -25,6 +26,12 @@ interface UserControllerApi {
 
   @GetMapping("/get/{id}")
   fun getById(@PathVariable id: UUID): UserResponse
+
+  @GetMapping("/search")
+  fun searchByName(@RequestParam("first_name") firstName: String, @RequestParam("last_name") lastName: String): List<UserResponse>
+
+  @GetMapping("/generate")
+  fun generateData()
 }
 
 @RestController
@@ -38,5 +45,13 @@ class UserController(
 
   override fun getById(id: UUID): UserResponse {
     return userService.getById(id.toString())
+  }
+
+  override fun searchByName(firstName: String, lastName: String): List<UserResponse> {
+    return userService.search(firstName, lastName)
+  }
+
+  override fun generateData() {
+    return userService.generateData()
   }
 }

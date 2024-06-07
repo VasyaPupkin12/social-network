@@ -52,6 +52,7 @@ class SecurityConfig(
         request
           .requestMatchers("/login").permitAll()
           .requestMatchers("/user/register").permitAll()
+          .requestMatchers("/user/generate").permitAll()
           .anyRequest().authenticated()
       }
       .sessionManagement { manager: SessionManagementConfigurer<HttpSecurity?> ->
