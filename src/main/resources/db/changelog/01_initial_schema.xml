@@ -1,6 +1,12 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
+  <changeSet id="create_pg_trgm" author="Vasily Kuchkin">
+    <sql>
+      CREATE EXTENSION pg_trgm;
+    </sql>
+  </changeSet>
+
   <changeSet id="create_user_table" author="Vasily Kuchkin">
     <createTable tableName="social_user" remarks="Таблица пользователей">
       <column name="id" type="UUID" remarks="Идентификатор записи">

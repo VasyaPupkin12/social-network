@@ -6,12 +6,31 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - postgres
-  postgres:
+      - pgmaster
+      - pgslave
+  pgmaster:
     image: postgres
     ports:
       - "5432:5432"
+    volumes:
+      - ./volumes/pgmaster:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
-      - POSTGRES_DB=social_network
+    networks:
+      - pgnet
+#  pgslave:
+#    image: postgres
+#    ports:
+#      - "15432:5432"
+#    volumes:
+#      - ./volumes/pgslave:/var/lib/postgresql/data
+#    environment:
+#      - POSTGRES_PASSWORD=postgres
+#      - POSTGRES_USER=postgres
+#    depends_on:
+#      - pgmaster
+#   networks:
+#     - pgnet
+networks:
+  pgnet:

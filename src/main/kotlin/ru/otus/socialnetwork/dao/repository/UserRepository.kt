@@ -1,5 +1,6 @@
 package ru.otus.socialnetwork.dao.repository
 
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Component
 import ru.otus.socialnetwork.dao.model.User
@@ -14,37 +15,41 @@ import java.util.UUID
  */
 @Component
 class UserRepository(
-  private val jdbcTemplate: JdbcTemplate
+  @Qualifier("masterJdbcTemplate")
+  private val masterTemplate: JdbcTemplate,
+
+  @Qualifier("slaveJdbcTemplate")
+  private val slaveTemplate: JdbcTemplate
 ) {
 
   fun save(user: User): User {
     val query =
       "INSERT INTO public.social_user (id, \"firstName\", \"secondName\", \"birthDate\", biography, city, password, locked) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
-    jdbcTemplate.update(query, user.id, user.firstName, user.secondName, user.birthDate, user.biography, user.city, user.password, user.locked)
+    masterTemplate.update(query, user.id, user.firstName, user.secondName, user.birthDate, user.biography, user.city, user.password, user.locked)
     return user
   }
 
   fun getById(id: String): User? {
     val query =
       "SELECT id, \"firstName\", \"secondName\", \"birthDate\", biography, city, password, locked FROM public.social_user WHERE id = ?"
-    return jdbcTemplate.queryForObject(query, mapResult(), UUID.fromString(id))
+    return masterTemplate.queryForObject(query, mapResult(), UUID.fromString(id))
   }
 
   fun findAllByName(firstName: String, lastName: String): List<User?> {
     val query = "SELECT id, \"firstName\", \"secondName\", \"birthDate\", biography, city FROM public.social_user WHERE \"firstName\" ILIKE ? AND \"secondName\" ILIKE ?"
-    return jdbcTemplate.query(query, mapForView(), "$firstName%", "$lastName%")
+    return slaveTemplate.query(query, mapForView(), "$firstName%", "$lastName%")
   }
 
   fun getByIdView(id: String): User? {
     val query = "SELECT id, \"firstName\", \"secondName\", \"birthDate\", biography, city FROM public.social_user WHERE id = ? ORDER BY id"
-    return jdbcTemplate.queryForObject(query, mapForView(), UUID.fromString(id))
+    return slaveTemplate.queryForObject(query, mapForView(), UUID.fromString(id))
   }
 
   fun saveAll(users: List<User>) {
     val values = users.joinToString(",") {
       ("('${it.id}', '${it.firstName}', '${it.secondName}', '${it.birthDate}', '${it.biography}', '${it.city}', '${it.password}', '${it.locked}')")
     }
-    jdbcTemplate.update("INSERT INTO public.social_user (id, \"firstName\", \"secondName\", \"birthDate\", biography, city, password, locked) VALUES $values")
+    masterTemplate.update("INSERT INTO public.social_user (id, \"firstName\", \"secondName\", \"birthDate\", biography, city, password, locked) VALUES $values")
   }
 
   private fun mapForView() = { rs: ResultSet, _: Int ->

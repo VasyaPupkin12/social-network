@@ -32,6 +32,9 @@ interface UserControllerApi {
 
   @GetMapping("/generate")
   fun generateData()
+
+  @GetMapping("/generate/{count}/wait/{delay}")
+  fun generateDataWithDelay(@PathVariable count: Int, @PathVariable delay: Int)
 }
 
 @RestController
@@ -54,4 +57,10 @@ class UserController(
   override fun generateData() {
     return userService.generateData()
   }
+
+  override fun generateDataWithDelay(count: Int, delay: Int) {
+    return userService.generateDataWithDelay(count, delay)
+  }
+
+
 }

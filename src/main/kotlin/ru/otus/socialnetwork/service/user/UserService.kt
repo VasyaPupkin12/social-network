@@ -1,10 +1,20 @@
 package ru.otus.socialnetwork.service.user
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import lombok.extern.slf4j.Slf4j
 import org.apache.commons.lang3.RandomStringUtils
+import org.slf4j.LoggerFactory
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import ru.otus.socialnetwork.dao.model.User
 import ru.otus.socialnetwork.dao.repository.UserRepository
 import ru.otus.socialnetwork.dto.register.RegisterCommand
@@ -28,11 +38,14 @@ class UserService(
   private val passwordEncoder: PasswordEncoder,
 ) {
 
+  private val scope = CoroutineScope(IO)
+  private val log = LoggerFactory.getLogger(this::class.java)
   /**
    * Создание пользователя
    *
    * @return созданный пользователь
    */
+  @Transactional
   fun register(cmd: RegisterCommand): RegisterResponse {
     val user = User(
       id = UUID.randomUUID(),
@@ -60,6 +73,7 @@ class UserService(
       .map { mapToResponse(it) }
   }
 
+  @Transactional
   fun generateData() {
     val batch = 100
     val testPassword = passwordEncoder.encode("Test password")
@@ -96,8 +110,6 @@ class UserService(
 
   /**
    * Получение пользователя по имени пользователя
-   *
-   *
    * Нужен для Spring Security
    *
    * @return пользователь
@@ -113,5 +125,20 @@ class UserService(
    */
   private fun getByUsername(id: String): User {
     return repository.getById(id) ?: throw UsernameNotFoundException("Пользователь не найден")
+  }
+
+
+  fun generateDataWithDelay(count: Int, delay: Int) {
+    scope.launch {
+      val testPassword = passwordEncoder.encode("Test password")
+      val lines = File("src/main/resources/people.csv").readLines()
+      IntStream.range(0, count).forEach { i ->
+        val strUser = lines[(0..999990).random()]
+        val user = createUser(strUser.split(","), testPassword)
+        Thread.sleep(delay * 1000L)
+        repository.save(user)
+        log.info("User save: ${user.id}")
+      }
+    }
   }
 }
