@@ -3,4 +3,6 @@
 
   <include file="01_initial_schema.xml" relativeToChangelogFile="true"/>
   <include file="02_create_index.xml" relativeToChangelogFile="true"/>
+  <include file="03_create_post.xml" relativeToChangelogFile="true"/>
+  <include file="04_create_friend.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

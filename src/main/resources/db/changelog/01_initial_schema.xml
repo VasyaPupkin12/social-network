@@ -10,7 +10,7 @@
   <changeSet id="create_user_table" author="Vasily Kuchkin">
     <createTable tableName="social_user" remarks="Таблица пользователей">
       <column name="id" type="UUID" remarks="Идентификатор записи">
-        <constraints nullable="false" primaryKey="true" primaryKeyName="pk_svk_out"/>
+        <constraints nullable="false" primaryKey="true" primaryKeyName="user_pk" unique="true"/>
       </column>
       <column name="firstName" type="VARCHAR(255)" remarks="Имя пользователя"/>
       <column name="secondName" type="VARCHAR(255)" remarks="Фамилия пользователя"/>

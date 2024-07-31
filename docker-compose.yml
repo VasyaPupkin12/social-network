@@ -2,12 +2,19 @@ version: '2'
 
 services:
   social-network:
-    build: .
+    build:
+      context: .
+      args:
+        - no-cache
     ports:
       - "8080:8080"
     depends_on:
       - pgmaster
       - pgslave
+      - tarantool
+      - rabbitmq
+    networks:
+      - pgnet
   pgmaster:
     image: postgres
     ports:
@@ -19,18 +26,34 @@ services:
       - POSTGRES_USER=postgres
     networks:
       - pgnet
-#  pgslave:
-#    image: postgres
-#    ports:
-#      - "15432:5432"
-#    volumes:
-#      - ./volumes/pgslave:/var/lib/postgresql/data
-#    environment:
-#      - POSTGRES_PASSWORD=postgres
-#      - POSTGRES_USER=postgres
-#    depends_on:
-#      - pgmaster
-#   networks:
-#     - pgnet
+  pgslave:
+    image: postgres
+    ports:
+      - "15432:5432"
+    volumes:
+      - ./volumes/pgslave:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+    depends_on:
+      - pgmaster
+    networks:
+      - pgnet
+  tarantool:
+    image: tarantool/tarantool
+    ports:
+      - "3301:3301"
+    networks:
+      - pgnet
+  rabbitmq:
+    image: arm64v8/rabbitmq:3-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    networks:
+      - pgnet
 networks:
   pgnet:

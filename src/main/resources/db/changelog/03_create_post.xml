@@ -1,0 +1,23 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="create_post" author="Vasily Kuchkin">
+    <preConditions>
+      <not>
+        <tableExists tableName="post"/>
+      </not>
+    </preConditions>
+    <createTable tableName="post">
+      <column name="id" type="uuid">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="post_pk" unique="true"/>
+      </column>
+      <column name="text" type="varchar(1000)"/>
+      <column name="author_id" type="uuid"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="create_post_author_id_fk" author="Vasily Kuchkin">
+    <addForeignKeyConstraint baseTableName="post" baseColumnNames="author_id" constraintName="author_id_fk" referencedTableName="social_user"
+      referencedColumnNames="id"/>
+  </changeSet>
+</databaseChangeLog>

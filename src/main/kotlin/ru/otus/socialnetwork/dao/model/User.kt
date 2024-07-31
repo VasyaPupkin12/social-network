@@ -19,6 +19,7 @@ data class User(
   var city: String,
   private var password: String?,
   var locked: Boolean?,
+  var friends: List<UUID> = mutableListOf()
 ) : UserDetails {
 
   override fun getAuthorities(): MutableCollection<out GrantedAuthority> = mutableListOf()
