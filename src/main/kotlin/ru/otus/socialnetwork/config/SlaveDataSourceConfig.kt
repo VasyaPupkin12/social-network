@@ -51,4 +51,22 @@ class SlaveDataSourceConfig {
   fun slaveJdbcTemplate(@Qualifier("slaveDataSource") dataSource: DataSource?): JdbcTemplate {
     return JdbcTemplate(dataSource!!)
   }
+
+  @Bean("shardingDataSourceProperties")
+  @ConfigurationProperties("spring.datasource.sharding")
+  fun shardingDataSourceProperties(): DataSourceProperties {
+    return DataSourceProperties()
+  }
+
+  @Bean("shardingDataSource")
+  fun shardingDataSource(@Qualifier("shardingDataSourceProperties") properties: DataSourceProperties): DataSource {
+    return properties
+      .initializeDataSourceBuilder()
+      .build()
+  }
+
+  @Bean("shardingJdbcTemplate")
+  fun shardingJdbcTemplate(@Qualifier("shardingDataSource") dataSource: DataSource?): JdbcTemplate {
+    return JdbcTemplate(dataSource!!)
+  }
 }

@@ -19,7 +19,6 @@ class PostService(
   fun createPost(text: String): PostDto {
     val authorId = UUID.fromString(SecurityContextHolder.getContext().authentication.name)
     repository.createPost(Post(UUID.randomUUID(), text, authorId)).also { feedService.updateFeed(it) }.let { return PostDto(it) }
-
   }
 
   fun updatePost(postId: UUID, text: String): PostDto {
