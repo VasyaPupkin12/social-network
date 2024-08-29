@@ -36,7 +36,7 @@ import java.util.concurrent.CompletableFuture
  */
 @Slf4j
 @Component
-class BaseTarantoolService(
+class CacheBaseTarantoolService(
   private val client: TarantoolClient<TarantoolTuple, TarantoolResult<TarantoolTuple>>,
   @Value("\${application.name}") private val appName: String,
   @Value("#{'\${cache.space}'.split(',')}") private val spaces: List<String>
@@ -54,7 +54,6 @@ class BaseTarantoolService(
       spaces.forEach { initSpace(tSpaces, it) }
     }
   }
-
 
   /**
    * Найти все пространства кешей.

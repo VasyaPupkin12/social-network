@@ -21,7 +21,7 @@ import ru.otus.socialnetwork.utils.clientHandle
  */
 @Service
 class PostCacheTarantoolService(
-  private val baseTarantoolService: BaseTarantoolService,
+  private val cacheBaseTarantoolService: CacheBaseTarantoolService,
   private val client: TarantoolClient<TarantoolTuple, TarantoolResult<TarantoolTuple>>,
   private val factory: TarantoolTupleFactory,
   private val mapper: ObjectMapper,
@@ -32,7 +32,7 @@ class PostCacheTarantoolService(
   /**
    * Найти все имена для кешей.
    */
-  fun findAllCacheNames(): MutableList<String> = baseTarantoolService.findAllCacheNames()
+  fun findAllCacheNames(): MutableList<String> = cacheBaseTarantoolService.findAllCacheNames()
 
   /**
    * Положить значение в кеш.

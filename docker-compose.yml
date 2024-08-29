@@ -16,6 +16,7 @@ services:
     networks:
       - pgnet
     environment:
+      - SPRING_PROFILES_ACTIVE=dialog_tarantool
       - DB_NAME=social_network
       - DB_M_SERVER=pgmaster
       - DB_M_PORT=5432

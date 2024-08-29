@@ -1,16 +1,13 @@
 package ru.otus.socialnetwork.service.auth
 
+import org.slf4j.LoggerFactory
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.stereotype.Service
 import ru.otus.socialnetwork.dto.login.LoginCommandDto
 import ru.otus.socialnetwork.dto.login.LoginResponse
-import ru.otus.socialnetwork.dto.register.RegisterCommand
-import ru.otus.socialnetwork.dto.register.RegisterResponse
-import ru.otus.socialnetwork.dao.model.User
 import ru.otus.socialnetwork.service.jwt.JwtService
 import ru.otus.socialnetwork.service.user.UserService
-import java.util.UUID
 
 
 /**
@@ -24,6 +21,7 @@ class AuthenticationService(
   private val jwtService: JwtService,
   private val userService: UserService
 ) {
+  private val log = LoggerFactory.getLogger(this::class.java)
 
   /**
    * Аутентификация пользователя
@@ -43,6 +41,6 @@ class AuthenticationService(
       .userDetailsService()
       .loadUserByUsername(command.id.toString())
 
-    return LoginResponse(jwtService.generateToken(user))
+    return LoginResponse(jwtService.generateToken(user)).also { log.info("User info: {}, {}", command.id, it.token) }
   }
 }

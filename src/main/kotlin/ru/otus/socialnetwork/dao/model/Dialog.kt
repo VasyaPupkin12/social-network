@@ -12,5 +12,5 @@ data class Dialog(
   var userFrom: UUID,
   var userTo: UUID,
   var data: String,
-  var key: String,
+  var key: String? = null,
 )

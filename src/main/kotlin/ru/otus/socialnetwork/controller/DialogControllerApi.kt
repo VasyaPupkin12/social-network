@@ -29,7 +29,7 @@ interface DialogControllerApi {
 class DialogController(
   private val service: DialogService
 ) : DialogControllerApi {
-  override fun send(userId: String, message: SendMessageDto) = service.insert(userId, message)
+  override fun send(userId: String, message: SendMessageDto) = service.sendMessage(userId, message)
 
-  override fun list(userId: String): List<MessageDto> = service.select(userId)
+  override fun list(userId: String): List<MessageDto> = service.getMessages(userId)
 }
