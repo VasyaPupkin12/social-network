@@ -1,9 +1,9 @@
 version: '2'
 
 services:
-  social-network:
+  social-network-main:
     build:
-      context: .
+      context: social-network-main/.
       args:
         - no-cache
     ports:
@@ -13,6 +13,7 @@ services:
       - pgslave
       - tarantool
       - rabbitmq
+      - social-network-dialog
     networks:
       - pgnet
     environment:
@@ -39,6 +40,25 @@ services:
       - RABBIT_PORT=5672
       - RABBIT_USER=admin
       - RABBIT_PASSWORD=admin
+      - DIALOG_SERVER_NAME=social-network-dialog
+      - DIALOG_SERVER_PORT=8081
+  social-network-dialog:
+    build:
+      context: social-network-dialog/.
+      args:
+        - no-cache
+    ports:
+      - "8081:8081"
+    depends_on:
+      - tarantool
+    networks:
+      - pgnet
+    environment:
+      - TARANTOOL=tarantool
+      - TARANTOOL_PORT=3301
+      - TARANTOOL_PORT=3301
+      - TARANTOOL_USER=guest
+      - TARANTOOL_PASS=
   pgmaster:
     image: postgres
     ports:
