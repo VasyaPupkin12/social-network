@@ -16,7 +16,7 @@ import java.util.UUID
  * @author Vasily Kuchkin
  */
 @Component
-@Profile("!dialog_tarantool")
+@Profile("sharding")
 class DialogPostgresRepository(
   @Qualifier("shardingJdbcTemplate") private val template: JdbcTemplate
 ): DialogRepository {

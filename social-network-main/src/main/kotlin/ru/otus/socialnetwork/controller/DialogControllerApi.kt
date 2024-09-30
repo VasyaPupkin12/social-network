@@ -1,5 +1,6 @@
 package ru.otus.socialnetwork.controller
 
+import org.springframework.context.annotation.Profile
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -26,6 +27,7 @@ interface DialogControllerApi {
   fun list(@PathVariable userId: String, @RequestHeader("Authorization") token: String): List<MessageDto>
 }
 
+@Profile("sharding")
 @RestController
 class DialogController(
   private val service: DialogService

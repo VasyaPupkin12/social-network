@@ -17,14 +17,14 @@ import javax.sql.DataSource
 @Configuration
 class ShardingDataSourceConfig {
 
-  @Profile("!dialog_tarantool & !local")
+  @Profile("sharding")
   @Bean("shardingDataSourceProperties")
   @ConfigurationProperties("spring.datasource.sharding")
   fun shardingDataSourceProperties(): DataSourceProperties {
     return DataSourceProperties()
   }
 
-  @Profile("!dialog_tarantool & !local")
+  @Profile("sharding")
   @Bean("shardingDataSource")
   fun shardingDataSource(@Qualifier("shardingDataSourceProperties") properties: DataSourceProperties): DataSource {
     return properties
@@ -32,13 +32,13 @@ class ShardingDataSourceConfig {
         .build()
   }
 
-  @Profile("!dialog_tarantool & !local")
+  @Profile("sharding")
   @Bean("shardingJdbcTemplate")
   fun shardingJdbcTemplate(@Qualifier("shardingDataSource") dataSource: DataSource?): JdbcTemplate {
     return JdbcTemplate(dataSource!!)
   }
 
-  @Profile("!dialog_tarantool & local")
+  @Profile("sharding")
   @Bean("shardingJdbcTemplate")
   fun shardingJdbcTemplateLocal(@Qualifier("masterDataSource") dataSource: DataSource?): JdbcTemplate {
     return JdbcTemplate(dataSource!!)

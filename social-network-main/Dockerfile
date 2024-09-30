@@ -1,4 +1,4 @@
-FROM alpine/java:21-jdk
+FROM openjdk:21
 USER root
 
 RUN mkdir -p /home/app

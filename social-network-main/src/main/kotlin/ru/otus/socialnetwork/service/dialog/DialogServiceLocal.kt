@@ -15,7 +15,7 @@ import java.util.UUID
  * @author Vasily Kuchkin
  */
 @Service
-@Profile("local")
+@Profile("sharding")
 class DialogServiceLocal(
   private val repository: DialogRepository
 ) : DialogService {
