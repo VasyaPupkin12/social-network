@@ -8,8 +8,8 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
-import ru.otus.socialnetwork.dto.dialog.MessageDto
-import ru.otus.socialnetwork.dto.dialog.SendMessageDto
+import ru.otus.socialnetwork.dto.count.MessageDto
+import ru.otus.socialnetwork.dto.count.SendMessageDto
 
 /**
  * DialogServiceImpl.

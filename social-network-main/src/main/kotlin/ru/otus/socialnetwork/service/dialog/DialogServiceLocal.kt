@@ -5,8 +5,8 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 import ru.otus.socialnetwork.dao.model.Dialog
 import ru.otus.socialnetwork.dao.repository.DialogRepository
-import ru.otus.socialnetwork.dto.dialog.MessageDto
-import ru.otus.socialnetwork.dto.dialog.SendMessageDto
+import ru.otus.socialnetwork.dto.count.MessageDto
+import ru.otus.socialnetwork.dto.count.SendMessageDto
 import java.util.UUID
 
 /**

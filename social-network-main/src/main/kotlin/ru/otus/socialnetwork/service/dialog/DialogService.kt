@@ -1,7 +1,7 @@
 package ru.otus.socialnetwork.service.dialog
 
-import ru.otus.socialnetwork.dto.dialog.MessageDto
-import ru.otus.socialnetwork.dto.dialog.SendMessageDto
+import ru.otus.socialnetwork.dto.count.MessageDto
+import ru.otus.socialnetwork.dto.count.SendMessageDto
 
 /**
  * DialogService.

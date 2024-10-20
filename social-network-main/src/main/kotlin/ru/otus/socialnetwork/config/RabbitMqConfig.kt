@@ -64,7 +64,7 @@ class RabbitMqConfig(
 
   @Bean
   fun headerExchange(): HeadersExchange {
-    return HeadersExchange(listenerExchange,)
+    return HeadersExchange(listenerExchange)
   }
 
   @Bean

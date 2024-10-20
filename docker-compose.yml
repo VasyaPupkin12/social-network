@@ -103,6 +103,21 @@ services:
       - TARANTOOL_PORT=3301
       - TARANTOOL_USER=guest
       - TARANTOOL_PASS=
+  social-network-count:
+    build:
+      context: social-network-count/.
+      args:
+        - no-cache
+    ports:
+      - "8083:8083"
+    networks:
+      - pgnet
+    environment:
+      - DB_NAME=social_network_count
+      - DB_M_SERVER=pgcount
+      - DB_M_PORT=25432
+      - DB_M_USER=postgres
+      - DB_M_PASS=postgres
   pgmaster:
     image: postgres
     ports:
@@ -112,6 +127,18 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
+    networks:
+      - pgnet
+  pgcount:
+    image: postgres
+    ports:
+      - "25432:5432"
+    volumes:
+      - ./volumes/pgcount:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=social_network_count
     networks:
       - pgnet
   pgslave:

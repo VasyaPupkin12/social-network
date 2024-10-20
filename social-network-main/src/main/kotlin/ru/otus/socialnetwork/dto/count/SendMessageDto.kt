@@ -1,4 +1,4 @@
-package ru.otus.socialnetwork.dto.dialog
+package ru.otus.socialnetwork.dto.count
 
 /**
  * SendMessageDto.
